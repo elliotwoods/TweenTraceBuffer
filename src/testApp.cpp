@@ -51,8 +51,10 @@ void testApp::draw(){
 	
 	ofPopMatrix();
 	float y = 20;
-	ofDrawBitmapString("Press [SPACE] to reset recording", 20, y+=10);
-	ofDrawBitmapString("Press [s] to toggle sine signal generator [" + string(useSine ? "x" : " ") + "]", 20, y+=10);
+	ofDrawBitmapString("Press [SPACE] to reset recording", 20, y+=15);
+	ofDrawBitmapString("Press [s] to toggle sine signal generator [" + string(useSine ? "x" : " ") + "]", 20, y+=15);
+	
+	ofDrawBitmapString("Click somewhere in the x direction to set the threshold [" + ofToString(recordTrace.getThreshold()) + "]", 20, y+=15);
 }
 
 //--------------------------------------------------------------
@@ -86,7 +88,7 @@ void testApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
-
+	recordTrace.setThreshold(float(x) / ofGetWidth() * 0.3f);
 }
 
 //--------------------------------------------------------------
