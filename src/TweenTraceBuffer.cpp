@@ -197,6 +197,17 @@ void TweenTraceBuffer::clear() {
 }
 
 //----------
+void TweenTraceBuffer::flush() {
+	current.start = inputBuffer.getStart();
+	current.end = inputBuffer.getEndMinusOne();
+	
+	this->keyframes.insert(current);
+	point endOfLast = this->inputBuffer.getEndMinusOne();
+	this->clearInputBuffer();
+	this->add(endOfLast);
+}
+
+//----------
 void TweenTraceBuffer::draw() const {
 	set<KeyFrame>::const_iterator it;
 	for (it = this->keyframes.begin(); it != this->keyframes.end(); it++) {
@@ -204,6 +215,17 @@ void TweenTraceBuffer::draw() const {
 	}
 	this->inputBuffer.draw();
 }
+
+//----------
+float TweenTraceBuffer::getThreshold() const {
+	return this->threshold;
+}
+
+//----------
+void TweenTraceBuffer::setThreshold(float threshold) {
+	this->threshold = threshold;
+}
+
 
 //----------
 void TweenTraceBuffer::clearInputBuffer() {
@@ -225,14 +247,7 @@ bool TweenTraceBuffer::traceInputBuffer() {
     if (!this->searchFunc()) {
 		// shave off last value
 		// keyframe's function fits remaining points
-		
-		current.start = inputBuffer.getStart();
-		current.end = inputBuffer.getEndMinusOne();
-		
-		this->keyframes.insert(current);
-		point endOfLast = this->inputBuffer.getEndMinusOne();
-		this->clearInputBuffer();
-		this->add(endOfLast);
+		this->flush();
     }
 }
 

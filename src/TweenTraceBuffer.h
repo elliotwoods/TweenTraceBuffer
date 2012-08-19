@@ -58,8 +58,12 @@ public:
 	void add(pair<float, float>);
 	
 	void clear();
+	void flush(); ///<flush current input buffer into keyframe
 	
     void draw() const;
+	
+	float getThreshold() const;
+	void setThreshold(float);
 	
 protected:
     void clearInputBuffer();
